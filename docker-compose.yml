@@ -1,0 +1,40 @@
+version: "3.9"
+
+# One-command run of the backend (and optionally a Postgres database).
+# The React dashboard is a static build — host it separately (see DEPLOYMENT.md)
+# or serve the contents of frontend/dist with any static server.
+
+services:
+  backend:
+    build: ./backend
+    container_name: okara-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:-change-this-in-production}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@okara.superior.edu.pk}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-OkaraAdmin@2026}
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      # To use Postgres instead of SQLite, uncomment the db service below and set:
+      # DATABASE_URL: postgresql+psycopg2://okara:okara@db:5432/okara
+    volumes:
+      - okara_data:/app
+    # depends_on:
+    #   - db
+
+  # Optional Postgres (uncomment to use). Also uncomment DATABASE_URL above.
+  # db:
+  #   image: postgres:16
+  #   container_name: okara-db
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_USER: okara
+  #     POSTGRES_PASSWORD: okara
+  #     POSTGRES_DB: okara
+  #   volumes:
+  #     - okara_pg:/var/lib/postgresql/data
+
+volumes:
+  okara_data:
+  # okara_pg:

@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Env / secrets
+.env
+backend/.env
+frontend/.env
+
+# Database
+*.db
+*.sqlite3
+backend/okara_admissions.db
+
+# Node / build
+node_modules/
+frontend/dist/
+dist/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.log
